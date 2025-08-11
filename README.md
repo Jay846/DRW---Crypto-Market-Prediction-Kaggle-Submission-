@@ -4,7 +4,7 @@ This repository contains my work for the **[DRW – Crypto Market Prediction](ht
 The goal of the competition is to predict cryptocurrency price changes using historical data.
 
 #  Contents
-- `notebooks` – Jupyter notebooks or scripts for data analysis and modeling
+- `notebook50afdbcb49.ipynb` – Jupyter notebooks or scripts for data analysis and modeling
 - `images` – Visualizations and plots (optional)
 - `README.md` – Repository documentation
 
