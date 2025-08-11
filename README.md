@@ -8,8 +8,8 @@ Private Score: 0.06886
 Public Score: 0.05767
 
 #  Contents
-- `notebook50afdbcb49.ipynb` – Jupyter notebooks or scripts for data analysis and modeling
-- `images` – Visualizations and plots (optional)
+- `notebook_full.py` – Jupyter notebook or scripts for data analysis and modeling
+- `Explanation.txt` – Explanation of the code
 - `README.md` – Repository documentation
 
 #  Description
@@ -27,9 +27,6 @@ cd drw-crypto-market-prediction
 pip install -r requirements.txt
 
 3. Run the notebook/script to train the model.
-
-#  Example Plots
-(Add example prediction or EDA plots here from the `images/` folder)
 
 #  Acknowledgements
 - DRW and Kaggle for hosting the competition.
