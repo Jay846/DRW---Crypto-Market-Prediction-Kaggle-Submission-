@@ -1,0 +1,86 @@
+                                                             Code Explanation – DRW Crypto Market Prediction
+This notebook implements my end-to-end solution for the DRW – Crypto Market Prediction Kaggle competition, covering data loading, feature engineering, model training, and final submission file creation. The goal is to predict short-term cryptocurrency price changes using order book and trade data.
+1. Imports & Setup
+
+We use:
+NumPy / Pandas – data handling.
+Scikit-learn – preprocessing & regression models (Ridge, BayesianRidge).
+XGBoost & LightGBM – gradient boosting regressors for powerful predictions.
+gc – memory cleanup for large datasets.
+A random seed (SEED = 2024) is set for reproducibility.
+2. Data Loading
+
+The dataset is loaded from Kaggle’s competition files:
+train.parquet – historical market data for training.
+test.parquet – unseen market data to generate predictions.
+sample_submission.csv – template for submission.
+Pandas is used for efficient reading of Parquet and CSV formats.
+3. Feature Engineering
+
+We create new predictive features from raw order book data:
+spread – normalized bid-ask size difference.
+ofi (Order Flow Imbalance) – net difference between bid & ask quantities.
+buy_sell_ratio – ratio of buy quantity to sell quantity.
+volume_imbalance – normalized difference between buy and sell volume.
+log_volume – log-transformed traded volume.
+All infinities and missing values are replaced with 0.
+4. Rolling & Lag Features
+
+To capture short-term temporal patterns, we generate:
+Rolling means (rollmean) – average over the past N observations.
+Exponential moving averages (ema) – weighted averages favoring recent values.
+Lag features (lag) – previous time-step values.
+This is applied to core features:
+text
+['spread', 'ofi', 'buy_sell_ratio', 'volume_imbalance']
+Windows used: 3 and 5 steps.
+Lag used: 1 step.
+5. Feature Selection
+
+We exclude:
+timestamp, asset, label, and log_return_forward_1s
+Final feature_cols includes all other numerical features that have no missing values.
+To avoid data leakage from rolling calculations, the first few rows are dropped (min_lag = 5).
+6. Data Scaling
+
+We standardize features using StandardScaler, ensuring all features have mean 0 and variance 1 – important for models like Ridge regression.
+Target variable (label) is also standardized.
+7. Train/Validation Split
+
+We perform a time-based split:
+85% for training
+5% gap to avoid leakage
+Remaining 10% for validation
+8. Model Training
+
+Four models are trained:
+XGBoost Regressor
+Tree-based boosting with depth=5, learning rate=0.012, subsample/colsample regularization.
+LightGBM Regressor
+CPU-optimized boosting with max_depth=6 and regularization.
+Ridge Regression
+Linear regression with L2 regularization.
+Bayesian Ridge Regression
+Probabilistic linear regression for robust predictions.
+9. Model Blending
+
+We blend the predictions in weighted fashion:
+text
+XGBoost:  0.4
+LightGBM: 0.3
+Ridge:    0.2
+Bayesian: 0.1
+The blended predictions are evaluated using Pearson correlation with the validation target.
+10. Final Predictions & Submission
+
+Predict on test dataset using the trained models.
+Apply blending weights to get final predictions.
+Re-scale predictions back to the original target distribution.
+Save as submission.csv in the format required by Kaggle.
+Key Points
+
+Multiple feature engineering steps to extract signal from noisy market data.
+Use of ensemble learning (blending multiple models) to balance bias and variance.
+Time-aware train/validation split to mimic real trading scenarios.
+Reproducible workflow with fixed seed.
+Fully automated from raw data → final Kaggle submission
