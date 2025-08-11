@@ -3,6 +3,10 @@
 This repository contains my work for the **[DRW – Crypto Market Prediction](https://www.kaggle.com/competitions/drw-crypto-market-prediction)** Kaggle competition.  
 The goal of the competition is to predict cryptocurrency price changes using historical data.
 
+My Rank: 261/1092
+Private Score: 0.06886
+Public Score: 0.05767
+
 #  Contents
 - `notebook50afdbcb49.ipynb` – Jupyter notebooks or scripts for data analysis and modeling
 - `images` – Visualizations and plots (optional)
